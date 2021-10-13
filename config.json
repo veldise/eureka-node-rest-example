@@ -1,0 +1,14 @@
+{
+    "server": {
+        "port": 3033,
+        "ssl": {
+            "port": 3002,
+            "key": "private.pem",
+            "cert": "public.pem",
+            "passphrase": ""
+        }
+    },
+    "application": {
+        "name": "node-service"
+    }
+}

@@ -1,0 +1,46 @@
+{
+    // JSHint Default Configuration File (as on JSHint website)
+    // See http://jshint.com/docs/ for more details
+
+    "maxerr"                : 50,       // {int} Maximum error before stopping
+
+    // Relaxing
+    "esversion"             : 6,        // {int} Specify the ECMAScript version to which the code must adhere.
+
+    // Enforcing
+    "quotmark"              : "single", // Quotation mark consistency:
+                                        //   false    : do nothing (default)
+                                        //   true     : ensure whatever is used is consistent
+                                        //   "single" : require single quotes
+                                        //   "double" : require double quotes
+    "forin"                 : true,
+    "freeze"                : true,     // true: prohibits overwriting prototypes of native objects such as Array, Date etc.
+    "curly"                 : true,     // true: Require {} for every new block or scope
+    "eqeqeq"                : true,
+    "noarg"                 : true,     // true: Prohibit use of `arguments.caller` and `arguments.callee`
+    "notypeof"              : true,
+    "validthis"             : true,    // true: Tolerate using this in a non-constructor function
+
+    "undef"                 : true,     // true: Require all non-global variables to be declared (prevents global leaks)
+    "unused"                : true,     // Unused variables:
+                                        //   true     : all variables, last function parameter
+                                        //   "vars"   : all variables only
+                                        //   "strict" : all variables, all function parameters
+    "sub"                   : true,     // [Warning] This option has been deprecated and will be removed in the next major release of JSHint.
+                                        // This option suppresses warnings about using [] notation when it can be expressed in dot notation: person['name'] vs. person.name.
+    "strict"                : false,    // true: Requires all functions run in ES5 Strict Mode
+
+    // Environments
+    "browser"               : false,     // Web Browser (window, document, etc)
+    "devel"                 : false,     // Development/debugging (alert, confirm, etc)
+    "browserify"            : false,     // Browserify (node.js code in the browser)
+    "jquery"                : false,     // jQuery
+    "node"                  : true,      // Node.js
+    "mocha"                 : false,
+    "jasmine"               : false,
+
+    // Custom Globals
+    "globals"               : {         // additional predefined global variables
+        // "_": true
+    }
+}

@@ -1,0 +1,107 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+const fs = require('fs');
+const path = require('path');
+const http = require('http');
+const https = require('https');
+const express = require('express');
+const _ = require('lodash');
+const debug = require('debug')('node-service:server');
+
+const app = require('../app');
+const eurekaHelper = require('../lib/eureka.helper');
+/**
+ * Get port from environment and store in Express.
+ */
+const config = require('../config.json');
+const PORT = config.server.port;
+const APP_NAME = config.application.name;
+/**
+ * Create HTTPS server.
+ */
+const sslConfig = _.get(config, 'server.ssl') || {};
+var HTTPS_PORT = sslConfig.port;
+var sslOptions = {};
+
+try {
+    sslOptions.key = fs.readFileSync(path.join(__dirname, '..', sslConfig.key));
+    sslOptions.cert = fs.readFileSync(path.join(__dirname, '..', sslConfig.cert));
+} catch (error) {
+    console.error(error.message);
+    console.error('[CRIT] Cannot read ssl key, cert for https.');
+    process.exit();
+}
+// optional
+if (sslConfig.passphrase) {
+    sslOptions.passphrase = sslConfig.passphrase;
+}
+
+app.set('port', HTTPS_PORT);
+
+https.createServer(sslOptions, app).listen(HTTPS_PORT, () => {
+    console.log('https listening on port: ' + HTTPS_PORT);
+});
+/**
+ * Create HTTP server.
+ */
+const appHTTP = express();
+const server = http.createServer(appHTTP);
+
+// set up a route to redirect http to https
+appHTTP.get('*', function (req, res) {
+    let ip = req.headers['host'] || '';
+    if (ip.match(':')) {
+        ip = ip.split(':')[0];
+    }
+    res.redirect(`https://${ip}:${HTTPS_PORT}`);
+});
+
+server.listen(PORT);
+server.on('error', onError);
+server.on('listening', onListening);
+/**
+ * set Eureka
+ */
+eurekaHelper.registerWithEureka(APP_NAME, HTTPS_PORT);
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + PORT
+    : 'Port ' + PORT;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
