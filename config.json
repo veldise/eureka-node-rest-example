@@ -9,6 +9,6 @@
         }
     },
     "application": {
-        "name": "node-service"
+        "name": "rest-service"
     }
 }
