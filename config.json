@@ -3,12 +3,17 @@
         "port": 3033,
         "ssl": {
             "port": 3002,
-            "key": "private.pem",
-            "cert": "public.pem",
+            "key": "../private.pem",
+            "cert": "../public.pem",
             "passphrase": ""
         }
     },
     "application": {
-        "name": "rest-service"
+        "name": "rest-service",
+        "host": null
+    },
+    "eureka": {
+        "host": null,
+        "port": 8761
     }
 }
