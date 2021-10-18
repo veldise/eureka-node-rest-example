@@ -1,8 +1,10 @@
 {
     "server": {
-        "port": 3033,
+        "port": 3002,
+
         "ssl": {
-            "port": 3002,
+            "enabled": false,
+            "port": 3032,
             "key": "../private.pem",
             "cert": "../public.pem",
             "passphrase": ""
