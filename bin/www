@@ -54,7 +54,7 @@ if (enabledSSL) {
   * Create HTTP server.
   */
   const appHTTP = express();
-  const serverHTTP = http.createServer(appHTTP);
+  serverHTTP = http.createServer(appHTTP);
 
   // set up a route to redirect http to https
   appHTTP.get('*', function (req, res) {
