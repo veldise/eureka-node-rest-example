@@ -12,7 +12,8 @@
     },
     "application": {
         "name": "rest-service",
-        "host": null
+        "host": null,
+        "context-path": "/ms-rest"
     },
     "eureka": {
         "host": null,
