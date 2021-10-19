@@ -69,7 +69,7 @@ if (enabledSSL) {
   serverHTTP.on('error', onError);
   serverHTTP.on('listening', onListening);
 
-  eurekaHelper.registerWithEureka(APP_NAME, HTTPS_PORT, true);
+  eurekaHelper.registerWithEureka(APP_NAME, PORT, true, HTTPS_PORT);
 }
 else {
   /**
